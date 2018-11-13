@@ -58,11 +58,11 @@ func (wcc *WeChatController) Post() {
 	fmt.Println(infoX.Content)
 	if infoX.MsgType == "text"{
 		textX := models.TextX{}
-		textX.ToUserName = "<![CDATA[" + infoX.ToUserName + "]>"
-		textX.FromUserName = "<![CDATA[" + infoX.FromUserName + "]>"
-		textX.Content = "<![CDATA[" + "success " + "]>"
+		textX.ToUserName = infoX.ToUserName
+		textX.FromUserName = infoX.FromUserName
+		textX.Content = "success "
 		textX.CreateTime = strconv.FormatInt(time.Now().Unix(), 10)
-		textX.MsgType = "<![CDATA[" + infoX.MsgType + "]>"
+		textX.MsgType = infoX.MsgType
 		wcc.Data["xml"]=&textX
 		wcc.ServeXML()
 	}else {
