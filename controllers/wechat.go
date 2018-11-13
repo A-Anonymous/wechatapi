@@ -48,6 +48,7 @@ func (wcc *WeChatController) Post() {
 	//fmt.Println(wcc.Ctx.Input.RequestBody)
 	//fmt.Println(string(wcc.Ctx.Input.RequestBody))
 
+	fmt.Println(wcc.Ctx.Input.RequestBody)
 	infoX := models.InfoX{}
 	err := xml.Unmarshal(wcc.Ctx.Input.RequestBody, &infoX)
 	if err != nil {
