@@ -19,7 +19,7 @@ type Check struct{
 type InfoX struct{
 	ToUserName 		string `xml:"ToUserName"`    	// 接收方微信号
 	FromUserName 	string `xml:"FromUserName"`		// 发送方微信号，若为普通用户，则是一个OpenID
-	CreateTime 		string `xml:"CreateTime"`		// 消息创建时间 （整型）
+	CreateTime 		int	   `xml:"CreateTime"`		// 消息创建时间 （整型）
 	MsgType		 	string `xml:"MsgType"`			// 消息类型{image, text, link, location, shortvideo, video, voice}
 	Content		 	string `xml:"Content"`			// 文本消息内容
 	MsgId		 	string `xml:"MsgId"`			// 消息id，64位整型
@@ -43,7 +43,7 @@ type TextX struct{
 	XMLName   		xml.Name 	`xml:"xml"`				//xml名称
 	ToUserName 		string 		`xml:"ToUserName"`    	// 接收方微信号
 	FromUserName 	string 		`xml:"FromUserName"`	// 发送方微信号，若为普通用户，则是一个OpenID
-	CreateTime 		string 		`xml:"CreateTime"`		// 消息创建时间 （整型）
+	CreateTime 		int 		`xml:"CreateTime"`		// 消息创建时间 （整型）
 	MsgType		 	string 		`xml:"MsgType"`			// 消息类型{image, text, link, location, shortvideo, video, voice}
 	Content		 	string 		`xml:"Content"`			// 文本消息内容
 }

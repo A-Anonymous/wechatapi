@@ -61,7 +61,7 @@ func (wcc *WeChatController) Post() {
 		textX.ToUserName = infoX.ToUserName
 		textX.FromUserName = infoX.FromUserName
 		textX.Content = "ok"
-		textX.CreateTime = strconv.FormatInt(time.Now().Unix(), 10)
+		textX.CreateTime = time.Now().Unix()
 		textX.MsgType = infoX.MsgType
 		wcc.Data["xml"]=&textX
 		wcc.ServeXML()
