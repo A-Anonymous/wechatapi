@@ -13,7 +13,7 @@ type Check struct{
 	Echostr  		string  `json:"echostr"`
 }
 
-//消息xml
+//接收消息xml
 type InfoX struct{
 	ToUserName 		string `xml:"ToUserName"`    	// 接收方微信号
 	FromUserName 	string `xml:"FromUserName"`		// 发送方微信号，若为普通用户，则是一个OpenID
@@ -33,4 +33,13 @@ type InfoX struct{
 	Description		string `xml:"Description"`		// 消息描述
 	Url				string `xml:"Url"`				// 消息链接
 	PicUrl			string `xml:"PicUrl"`			// 图片链接（由系统生成）
+}
+
+//回复text消息xml
+type TextX struct{
+	ToUserName 		string `xml:"ToUserName"`    	// 接收方微信号
+	FromUserName 	string `xml:"FromUserName"`		// 发送方微信号，若为普通用户，则是一个OpenID
+	CreateTime 		string `xml:"CreateTime"`		// 消息创建时间 （整型）
+	MsgType		 	string `xml:"MsgType"`			// 消息类型{image, text, link, location, shortvideo, video, voice}
+	Content		 	string `xml:"Content"`			// 文本消息内容
 }

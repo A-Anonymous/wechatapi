@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"sort"
+	"strconv"
+	"time"
 	"wechatapi/models"
 	"wechatapi/tools"
 )
@@ -12,6 +14,7 @@ import (
 type WeChatController struct {
 	beego.Controller
 }
+
 
 func (wcc *WeChatController) Get() {
 	//mc.Render("/index.html")
@@ -51,9 +54,21 @@ func (wcc *WeChatController) Post() {
 		//fmt.Printf("error: %v", err)
 		return
 	}
-
-
 	fmt.Println(infoX.Content)
+	if infoX.MsgType == "text"{
+		textX := models.TextX{}
+		textX.ToUserName = infoX.ToUserName
+		textX.FromUserName = infoX.FromUserName
+		textX.Content = "success "
+		textX.CreateTime = strconv.FormatInt(time.Now().Unix(), 10)
+		textX.MsgType = infoX.MsgType
+		wcc.Data["xml"]=&textX
+		wcc.ServeXML()
+	}else {
+		wcc.Ctx.WriteString("success")
+	}
+
+
 
 }
 
