@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"sort"
-	"weChatAPI/models"
-	"weChatAPI/tools"
+	"wechatapi/models"
+	"wechatapi/tools"
 )
 
 type WeChatController struct {
