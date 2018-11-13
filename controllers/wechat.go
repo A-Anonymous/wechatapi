@@ -57,8 +57,8 @@ func (wcc *WeChatController) Post() {
 	fmt.Println(infoX.Content)
 	if infoX.MsgType == "text"{
 		textX := models.TextX{}
-		textX.ToUserName = infoX.ToUserName
-		textX.FromUserName = infoX.FromUserName
+		textX.ToUserName = infoX.FromUserName
+		textX.FromUserName = infoX.ToUserName
 		textX.Content = "ok"
 		textX.CreateTime = int(time.Now().Unix())
 		textX.MsgType = infoX.MsgType
