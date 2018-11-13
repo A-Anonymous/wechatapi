@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"sort"
 	"weChatAPI/models"
@@ -22,10 +23,6 @@ func (wcc *WeChatController) Get() {
 	check.Signature = wcc.GetString("signature")
 	check.Timestamp = wcc.GetString("timestamp")
 
-	//fmt.Println(jsondata)
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
 	bl, err := checkSignature(check)
 	if err != nil{
 		wcc.Ctx.WriteString("error")
@@ -38,9 +35,25 @@ func (wcc *WeChatController) Get() {
 
 }
 
+
+func (wcc *WeChatController) Post() {
+	//mc.Render("/index.html")
+
+	//mc.TplName = "index.html"
+	//mc.Ctx.WriteString("hello world")
+	check := models.InfoX{}
+	 
+	check.Content = wcc.GetString("Content")
+
+	fmt.Println(check.Content)
+
+}
+
+
 func checkSignature (check models.Check) (bool, error){
     //token、timestamp、nonce
-    token := "123qwe"
+    //token := "123qwe"
+	token := beego.AppConfig.String("token")
 	var msg []string
 	msg = append(msg, token)
 	msg = append(msg, check.Timestamp)
