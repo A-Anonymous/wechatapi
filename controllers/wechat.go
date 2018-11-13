@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"sort"
-	"strconv"
 	"time"
 	"wechatapi/models"
 	"wechatapi/tools"
@@ -61,7 +60,7 @@ func (wcc *WeChatController) Post() {
 		textX.ToUserName = infoX.ToUserName
 		textX.FromUserName = infoX.FromUserName
 		textX.Content = "ok"
-		textX.CreateTime = time.Now().Unix()
+		textX.CreateTime = int(time.Now().Unix())
 		textX.MsgType = infoX.MsgType
 		wcc.Data["xml"]=&textX
 		wcc.ServeXML()
