@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/xml"
 	"fmt"
 	"github.com/astaxie/beego"
 	"sort"
@@ -41,11 +42,18 @@ func (wcc *WeChatController) Post() {
 
 	//mc.TplName = "index.html"
 	//mc.Ctx.WriteString("hello world")
-	check := models.InfoX{}
-	 
-	check.Content = wcc.GetString("Content")
+	//fmt.Println(wcc.Ctx.Input.RequestBody)
+	//fmt.Println(string(wcc.Ctx.Input.RequestBody))
 
-	fmt.Println(check.Content)
+	infoX := models.InfoX{}
+	err := xml.Unmarshal(wcc.Ctx.Input.RequestBody, &infoX)
+	if err != nil {
+		//fmt.Printf("error: %v", err)
+		return
+	}
+
+
+	fmt.Println(infoX.Content)
 
 }
 
