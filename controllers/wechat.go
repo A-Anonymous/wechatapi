@@ -59,7 +59,7 @@ func (wcc *WeChatController) Post() {
 		textX := models.TextX{}
 		textX.ToUserName = infoX.FromUserName
 		textX.FromUserName = infoX.ToUserName
-		textX.Content = "ok"
+		textX.Content = "测试功能，无实际意义！！！"
 		textX.CreateTime = int(time.Now().Unix())
 		textX.MsgType = infoX.MsgType
 		wcc.Data["xml"]=&textX
