@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/astaxie/beego"
-	_ "weChatAPI/routers"
+	_ "wechatAPI/routers"
 )
 
 func main() {

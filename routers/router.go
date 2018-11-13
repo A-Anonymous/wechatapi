@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	"weChatAPI/controllers"
+	"wechatAPI/controllers"
 )
 
 func init(){
