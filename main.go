@@ -5,12 +5,48 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"os"
+	"time"
 	_ "wechatapi/routers"
+	"wechatapi/tools"
 )
 
 func main() {
 
+	//t, err := tools.EncryptMsg("1", "1", "1", "1", "1", 0)
+	//fmt.Println(t)
+	//fmt.Println(err)
+
 	//test()
+
+	//hontl()
+
+
+	token := "spamtest"
+	aesKey := "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFG"
+	xmlStr := ` <xml><ToUserName><![CDATA[oia2TjjewbmiOUlr6X-1crbLOvLw]]></ToUserName><FromUserName><![CDATA[gh_7f083739789a]]></FromUserName><CreateTime>1407743423</CreateTime><MsgType>  <![CDATA[video]]></MsgType><Video><MediaId><![CDATA[eYJ1MbwPRJtOvIEabaxHs7TX2D-HV71s79GUxqdUkjm6Gs2Ed1KF3ulAOA9H1xG0]]></MediaId><Title><![CDATA[testCallBackReplyVideo]]></Title><Descript  ion><![CDATA[testCallBackReplyVideo]]></Description></Video></xml>`
+	appId := "wx2c2769f8efd9abc2"
+	nonce := "1320562132"
+	timestamp := int(time.Now().Unix())
+
+	fmt.Println(timestamp)
+
+	re, err := tools.EncryptMsg(token, aesKey, appId,
+		xmlStr, nonce, timestamp)
+	if err != nil{
+		fmt.Println(err)
+	}else{
+		fmt.Println(re)
+
+		fmt.Println("加密结束，开始验证解密")
+		result, err := tools.DecryptMsg(re, token, aesKey,
+			appId, nonce, timestamp)
+		if err != nil{
+			fmt.Println(err)
+			return
+		}
+		fmt.Println(result)
+	}
+
 
 	beego.Info(beego.BConfig.AppName, "V0.1")
 
@@ -44,3 +80,12 @@ func test (){
 
 	os.Stdout.Write(output)
 }
+
+
+func hontl(){
+	to_xml := ` <xml><ToUserName><![CDATA[oia2TjjewbmiOUlr6X-1crbLOvLw]]></ToUserName><FromUserName><![CDATA[gh_7f083739789a]]></FromUserName><CreateTime>1407743423</CreateTime><MsgType>  <![CDATA[video]]></MsgType><Video><MediaId><![CDATA[eYJ1MbwPRJtOvIEabaxHs7TX2D-HV71s79GUxqdUkjm6Gs2Ed1KF3ulAOA9H1xG0]]></MediaId><Title><![CDATA[testCallBackReplyVideo]]></Title><Descript  ion><![CDATA[testCallBackReplyVideo]]></Description></Video></xml>`
+	tools.Pkcs7Encode([]byte(to_xml), 32)
+
+}
+
+

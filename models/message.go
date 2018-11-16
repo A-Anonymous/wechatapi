@@ -47,3 +47,13 @@ type TextX struct{
 	MsgType		 	string 		`xml:"MsgType"`			// 消息类型{image, text, link, location, shortvideo, video, voice}
 	Content		 	string 		`xml:"Content"`			// 文本消息内容
 }
+
+
+//生成xml
+type Encrypt struct{
+	XMLName   		xml.Name 	`xml:"xml"`
+	Signature 		string  	`json:"signature"`
+	Encrypt	 		string  	`json:"encrypt"`
+	Nonce  			string  	`json:"nonce"`
+	Timestamp  		int     	`json:"timestamp"`
+}
