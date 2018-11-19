@@ -58,3 +58,14 @@ type Encrypt struct{
 	Nonce  			string  	`json:"Nonce"`
 	Timestamp  		int     	`json:"Timestamp"`
 }
+
+
+//密文的xml
+type Encrypted struct{
+	XMLName   		xml.Name 	`xml:"xml"`
+	//ToUserName 		string 		`xml:"ToUserName"`
+	MsgSignature 	string  	`json:"MsgSignature"`
+	Encrypt	 		string  	`json:"Encrypt"`
+	Nonce  			string  	`json:"Nonce"`
+	Timestamp  		int     	`json:"Timestamp"`
+}

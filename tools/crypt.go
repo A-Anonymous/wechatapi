@@ -17,7 +17,7 @@ func EncryptMsg(token string, aesKey string, appId string,
 	if err != nil {
 	     fmt.Println(err)
 	}
-	fmt.Println("a", string(decodeBytes))
+	//fmt.Println("a", string(decodeBytes))
 
 	//明文长度，int转byte
 	//lenStr := BytesToHexString(SockHtonl(len(xmlStr)),true)
@@ -32,8 +32,8 @@ func EncryptMsg(token string, aesKey string, appId string,
 	if err != nil{
 		return "", err
 	}
-	fmt.Println("cryptograph")
-	fmt.Println(cryptograph)
+	//fmt.Println("cryptograph")
+	//fmt.Println(cryptograph)
 
 	//生成安全签名
 	var msg []string
@@ -49,9 +49,9 @@ func EncryptMsg(token string, aesKey string, appId string,
 	}
 
 
-	fmt.Println("加密时生成的签名：", signature)
-	var encrypt models.Encrypt
-	encrypt.Signature = signature
+	//fmt.Println("加密时生成的签名：", signature)
+	var encrypt models.Encrypted
+	encrypt.MsgSignature  = signature
 	encrypt.Nonce = nonce
 	encrypt.Timestamp = timestamp
 	encrypt.Encrypt = cryptograph
@@ -63,7 +63,7 @@ func EncryptMsg(token string, aesKey string, appId string,
 	}
 	//text = string(data)
 	//fmt.Println("test")
-	fmt.Println(string(data))
+	//fmt.Println(string(data))
 	//fmt.Println()
 
 	return string(data), nil
@@ -78,7 +78,7 @@ func DecryptMsg(postMsg string, token string, aesKey string,
 
 	//解码xml
 	//xml.Unmarshal([]byte(postMsg), &decrypt)
-	fmt.Println("decrypt:		", postMsg)
+	//fmt.Println("decrypt:		", postMsg)
 	//fmt.Println("decrypt.ToUserName:		", decrypt.ToUserName)
 	//fmt.Println("decrypt.Encrypt:		", decrypt.Encrypt)
 
@@ -95,19 +95,19 @@ func DecryptMsg(postMsg string, token string, aesKey string,
 	}
 	content, err := AesDecrypt([]byte(encrypt), decodeBytes)
 
-	fmt.Println("解密后的明文")
-	fmt.Println("miwen:	", postMsg)
+	//fmt.Println("解密后的明文")
+	//fmt.Println("miwen:	", postMsg)
 	fmt.Println("明文:		", string(content))
 
 
 	//去除16随机字符
 	content = content[16:]
-	fmt.Println("去除16个随机字符")
-	fmt.Println(string(content))
-
-	fmt.Println("bytes content:	", content)
-
-	fmt.Println(string(content[:4]))
+	//fmt.Println("去除16个随机字符")
+	//fmt.Println(string(content))
+	//
+	//fmt.Println("bytes content:	", content)
+	//
+	//fmt.Println(string(content[:4]))
 
 
 
@@ -116,9 +116,9 @@ func DecryptMsg(postMsg string, token string, aesKey string,
 	//	return "", err
 	//}
 	lenXml := SockNonhl(content[:4])
-	fmt.Println(lenXml)
-	fmt.Println("appid:	", string(content[lenXml + 4:]))
-	fmt.Println("appId:	", appId)
+	//fmt.Println(lenXml)
+	//fmt.Println("appid:	", string(content[lenXml + 4:]))
+	//fmt.Println("appId:	", appId)
 	if string(content[lenXml + 4:]) != appId{
 		fmt.Println("cuole")
 	}
@@ -134,7 +134,7 @@ func DecryptMsg(postMsg string, token string, aesKey string,
 	str := ArrToString(msg)
 	signature, err := SHA1(str)
 	fmt.Println("解密时生成的签名：", signature)
-	fmt.Println(signature)
+	//fmt.Println(signature)
 	//fmt.Println(decrypt.Signature)
 	if err != nil{
 		return "", err

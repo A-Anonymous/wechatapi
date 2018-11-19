@@ -164,9 +164,9 @@ func AesDecrypt(crypted, key []byte) ([]byte, error){
 	origData := make([]byte, len(crypted))
 	blockMode.CryptBlocks(origData, crypted)
 
-	fmt.Println("削减")
-	fmt.Println(origData)
-	fmt.Println(string(origData))
+	//fmt.Println("削减")
+	//fmt.Println(origData)
+	//fmt.Println(string(origData))
 	origData = Pkcs7Decode(origData)
 	return origData, nil
 

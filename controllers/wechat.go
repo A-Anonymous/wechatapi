@@ -48,7 +48,7 @@ func (wcc *WeChatController) Post() {
 	timestamp := int(time.Now().Unix())
 
 	//获得body数据
-	//fmt.Println(string(wcc.Ctx.Input.RequestBody))
+	fmt.Println("body数据:		", string(wcc.Ctx.Input.RequestBody))
 	infoX := models.InfoX{}
 	err := xml.Unmarshal(wcc.Ctx.Input.RequestBody, &infoX)
 	if err != nil {
@@ -64,6 +64,9 @@ func (wcc *WeChatController) Post() {
 		fmt.Println("error:	", err)
 		return
 	}
+
+	fmt.Println("解密后的明文：	", result)
+
 	re := models.InfoX{}
 	err = xml.Unmarshal([]byte(result), &re)
 	if err != nil {
@@ -83,23 +86,25 @@ func (wcc *WeChatController) Post() {
 		return
 	}
 
+	//加密
 	encrypte, err := tools.EncryptMsg(token, aesKey, appId,
 		string(xmlStr), nonce, timestamp)
 	if err != nil{
 		fmt.Println(err)
-	}else {
-		err = xml.Unmarshal([]byte(encrypte), &re)
-		if err != nil {
-			//fmt.Printf("error: %v", err)
-			return
-		}
-		fmt.Println("re", encrypte)
-		wcc.Data["xml"]=&re
-		wcc.ServeXML()
 	}
-	fmt.Println("result", result)
-	wcc.Data["xml"]=&re
+
+	res := models.Encrypted{}
+	err = xml.Unmarshal([]byte(encrypte), &res)
+	if err != nil {
+		//fmt.Printf("error: %v", err)
+		return
+	}
+	//fmt.Println("re", encrypte)
+	wcc.Data["xml"]=&res
 	wcc.ServeXML()
+
+
+
 
 
 	// 非加密模式，测试
