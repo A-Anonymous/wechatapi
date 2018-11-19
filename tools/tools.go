@@ -83,6 +83,9 @@ func SockNonhl(inputBytes []byte) uint32{
 }
 
 
+
+
+
 //生成随机字符串范围包括大小写字母，数字
 func GetRandomStr(num int, lower bool, upper bool, digits bool)string{
 	var re string

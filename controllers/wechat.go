@@ -40,33 +40,82 @@ func (wcc *WeChatController) Get() {
 
 
 func (wcc *WeChatController) Post() {
-	//mc.Render("/index.html")
+	//获取默认参数
+	token := beego.AppConfig.String("token")
+	aesKey := beego.AppConfig.String("EncodingAESKey")
+	appId := beego.AppConfig.String("appid")
+	nonce := beego.AppConfig.String("nonce")
+	timestamp := int(time.Now().Unix())
 
-	//mc.TplName = "index.html"
-	//mc.Ctx.WriteString("hello world")
-	//fmt.Println(wcc.Ctx.Input.RequestBody)
+	//获得body数据
 	//fmt.Println(string(wcc.Ctx.Input.RequestBody))
-
-	fmt.Println(string(wcc.Ctx.Input.RequestBody))
 	infoX := models.InfoX{}
 	err := xml.Unmarshal(wcc.Ctx.Input.RequestBody, &infoX)
 	if err != nil {
 		//fmt.Printf("error: %v", err)
 		return
 	}
-	fmt.Println(infoX.Content)
-	if infoX.MsgType == "text"{
-		textX := models.TextX{}
-		textX.ToUserName = infoX.FromUserName
-		textX.FromUserName = infoX.ToUserName
-		textX.Content = "测试功能，无实际意义！！！"
-		textX.CreateTime = int(time.Now().Unix())
-		textX.MsgType = infoX.MsgType
-		wcc.Data["xml"]=&textX
-		wcc.ServeXML()
-	}else {
-		wcc.Ctx.WriteString("success")
+
+
+	//解密
+	result, err := tools.DecryptMsg(infoX.Encrypt, token, aesKey,
+		appId, nonce, timestamp)
+	if err != nil{
+		fmt.Println("error:	", err)
+		return
 	}
+	re := models.InfoX{}
+	err = xml.Unmarshal([]byte(result), &re)
+	if err != nil {
+		//fmt.Printf("error: %v", err)
+		return
+	}
+
+	//对内容做处理
+
+	//test
+	re.Content = "This is a test!!!"
+	re.CreateTime = int(time.Now().Unix())
+
+	xmlStr, err := xml.Marshal(re)
+	if err != nil{
+		fmt.Println(err)
+		return
+	}
+
+	encrypte, err := tools.EncryptMsg(token, aesKey, appId,
+		string(xmlStr), nonce, timestamp)
+	if err != nil{
+		fmt.Println(err)
+	}else {
+		err = xml.Unmarshal([]byte(encrypte), &re)
+		if err != nil {
+			//fmt.Printf("error: %v", err)
+			return
+		}
+		fmt.Println("re", encrypte)
+		wcc.Data["xml"]=&re
+		wcc.ServeXML()
+	}
+	fmt.Println("result", result)
+	wcc.Data["xml"]=&re
+	wcc.ServeXML()
+
+
+	// 非加密模式，测试
+	//fmt.Println(infoX.Content)
+	//if infoX.MsgType == "text"{
+	//	textX := models.TextX{}
+	//	textX.ToUserName = infoX.FromUserName
+	//	textX.FromUserName = infoX.ToUserName
+	//	textX.Content = "测试功能，无实际意义！！！"
+	//	textX.CreateTime = int(time.Now().Unix())
+	//	textX.MsgType = infoX.MsgType
+	//	wcc.Data["xml"]=&textX
+	//	wcc.ServeXML()
+	//}else {
+	//	wcc.Ctx.WriteString("success")
+	//}
 
 
 
