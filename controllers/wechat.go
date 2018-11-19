@@ -77,9 +77,12 @@ func (wcc *WeChatController) Post() {
 	//对内容做处理
 
 	//test
+
 	re.Content = "This is a test!!!"
 	re.CreateTime = int(time.Now().Unix())
 
+	re.ToUserName = infoX.FromUserName
+	re.FromUserName = infoX.ToUserName
 	xmlStr, err := xml.Marshal(re)
 	if err != nil{
 		fmt.Println(err)
